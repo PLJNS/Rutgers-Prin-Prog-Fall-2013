@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.0.5.2 (MacOSX)">
+	<META NAME="CREATED" CONTENT="20120916;11375900">
+	<META NAME="CHANGED" CONTENT="20131002;17224900">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1>CS 314, Fall 2013, Project 1 – patterns (Scheme)</H1>
+<P><FONT SIZE=4>Please note:</FONT></P>
+<UL>
+	<LI><P><FONT SIZE=4>This assignment is due at 11 pm Monday, October
+	14.  Late assignments will not be accepted.</FONT></P>
+	<LI><P><FONT SIZE=4>You can submit as many times as you want, but
+	only one version will be graded: &nbsp;the last version that is not
+	late. </FONT>
+	</P>
+	<LI><P><FONT SIZE=4>This is a project, as opposed to an exercise,
+	and is graded on a 100 point scale based on how much of your code
+	works correctly.</FONT></P>
+</UL>
+<P><FONT SIZE=4>See the attached file, patterns-handout.scm. &nbsp;It
+defines functions for</FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in"><FONT SIZE=4>defining and </FONT>
+	</P>
+	<LI><P><FONT SIZE=4>printing </FONT>
+	</P>
+</UL>
+<P><FONT SIZE=4>pretty patterns of characters on the screen. &nbsp;A
+pattern is represented by a list as described in
+patterns-handout.scm. &nbsp;The last element of that list is a
+function. &nbsp;If you call that function with 2 arguments, a row
+number and a column number, it will return the character at that row
+and column of the pattern. &nbsp;E.g. &nbsp;if the pattern looks
+like<BR><BR>ab<BR>cd<BR><BR>and you call the function with arguments
+0 and 1 it would return the character #\b. &nbsp;(Row 0, column 1.
+&nbsp;Row and column numbers start at 0.)</FONT></P>
+<P><FONT SIZE=4>Note how function (actually, a closure) is serving as
+part of a data structure representing a pattern.<BR><BR>Your
+assignment is to &nbsp;fill in the code as indicated by the comments.
+&nbsp;You may also add additional functions, but you may not change
+the existing code other than by filling in as indicated and defining
+additional functions. &nbsp;Additional functions must have comments
+similar in style to the comments on&nbsp;existing functions. &nbsp;You
+must fill in at each place indicated in such a way that the functions
+all work as specified.<BR><BR>Turn in your version of the file
+patterns-handout.scm with everything filled in. &nbsp;</FONT></P>
+<P><FONT SIZE=4>Here are some examples. &nbsp;Note that defining a
+pattern does not cause anything to be printed.<BR>&nbsp;</FONT></P>
+<PRE><FONT SIZE=4>&gt; (for-n 2 4 (lambda (n) (display n) (+ n 10)))</FONT>
+<FONT SIZE=4>234(12 13 14)</FONT>
+<FONT SIZE=4>&gt; (define pa (charpat #\a))</FONT>
+
+<FONT SIZE=4>&gt; (define pb (charpat #\b))</FONT>
+
+<FONT SIZE=4>&gt; (define ab (append-cols pa pb))</FONT>
+
+<FONT SIZE=4>&gt; (define cde (append-cols (charpat #\c)(append-cols (charpat #\d)(charpat #\e))))</FONT>
+
+<FONT SIZE=4>&gt; (define abcd (append-rows  ab cde))</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 0 0 0 pa)</FONT>
+<FONT SIZE=4>a</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 0 0 1 pa)</FONT>
+<FONT SIZE=4>a.</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 1 0 1 pa)</FONT>
+<FONT SIZE=4>a.</FONT>
+<FONT SIZE=4>..</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 1 0 1 ab)</FONT>
+<FONT SIZE=4>ab</FONT>
+<FONT SIZE=4>..</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 2 0 2 abcd) ; note that cde gets truncated to 2 columns</FONT>
+<FONT SIZE=4>; because ab has only 2 columns</FONT>
+<FONT SIZE=4>ab.</FONT>
+<FONT SIZE=4>cd.</FONT>
+<FONT SIZE=4>...</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 1 0 2 cde)</FONT>
+<FONT SIZE=4>cde</FONT>
+<FONT SIZE=4>...</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 3 0 3 (sw-corner 4))</FONT>
+<FONT SIZE=4>*   </FONT>
+<FONT SIZE=4>**  </FONT>
+<FONT SIZE=4>*** </FONT>
+<FONT SIZE=4>****</FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 3 0 3 (flip-rows(sw-corner 4)))</FONT>
+<FONT SIZE=4>****</FONT>
+<FONT SIZE=4>*** </FONT>
+<FONT SIZE=4>**  </FONT>
+<FONT SIZE=4>*   </FONT>
+
+<FONT SIZE=4>&gt; (display-window 0 3 0 3 (flip-cols(sw-corner 4)))</FONT>
+   <FONT SIZE=4>*</FONT>
+  <FONT SIZE=4>**</FONT>
+ <FONT SIZE=4>***</FONT>
+<FONT SIZE=4>****</FONT>
+
+<FONT SIZE=4>&gt; (let ((p1 (append-rows ab (flip-cols ab))))</FONT>
+    <FONT SIZE=4>(display-window 0 2 0 4 (append-cols p1 (flip-rows p1))))</FONT>
+<FONT SIZE=4>abba.</FONT>
+<FONT SIZE=4>baab.</FONT>
+<FONT SIZE=4>.....</FONT></PRE><P>
+<BR><BR>
+</P>
+</BODY>
+</HTML>
