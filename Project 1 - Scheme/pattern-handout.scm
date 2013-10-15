@@ -26,18 +26,22 @@
 (define (for-n start stop fn)
     (if (> start stop) ; condition defined in comment above
         '() ; empty list for base case
-        (append (fn start) (for-n (+ start 1) stop fn))
-        ; taking whatever fn(start) is and appending to
+        (append (list (fn start)) (for-n (+ start 1) stop fn))
+        ; taking whatever list(fn(start)) is and appending to
         ; it the next for-n
     )
-  '()
 )
 
 ;;; range-check takes 4 arguments:  row, numrows, col, numcols. It checks if
 ;;;  0 <= row < numrows and similarly for col and numcols.  If both row and col are in range
 ;;;  range-check returns #t, otherwise #f
 (define (range-check row numrows col numcols)
-  (and (0 <= row < numrows) (0 <= col < numcols))
+  (and ; all conditions must be true
+   (<= 0 row) 
+   (<= 0 col) 
+   (< row numrows) 
+   (< col numcols)
+   )
 )
 
 ;;; add-check takes 3 arguments: fn, numrows and numcols.  Fn is a
@@ -85,9 +89,35 @@
 ;;; repeat-cols returns a pattern made up of nrepeats copies of
 ;;; pattern, appended horizontally (left and right of each other)
 (define (repeat-cols nrepeats pattern)
-  (make-pattern (pattern-numrows pattern) 
-                (* nrepeats (pattern-numcols pattern)) 
-                ; the function just calls the function repeat-cols received, but 
-                ; uses modulo to select the right position.
-                (lambda (row col) ((pattern-fn pattern) row (modulo col (pattern-numcols pattern)))) ))
+  (make-pattern 
+   (pattern-numrows pattern)
+   (* nrepeats (pattern-numcols pattern))
+   (lambda (row col) ((pattern-fn pattern) row (modulo col (pattern-numcols pattern)))) 
+   )
+  )
+
+;;; repeat-rows returns a pattern made up of nrepeats copies of
+;;; pattern, appended vertically (above and below each other)
+(define (repeat-rows nrepeats pattern)
+  ; (make-pattern numrows numcols fn)
+    (make-pattern 
+     (pattern-numcols pattern) 
+     (* nrepeats (pattern-numrows pattern)) ; rows not cols
+     (lambda (row col) ((pattern-fn pattern) (modulo row (pattern-numrows pattern)) col))
+     )
+  )
+
+(define (get-row-length-of pattern1 pattern2)
+  (+ (pattern-numrows pattern1) (pattern-numrows pattern2))
+  )
+
+(define (get-col-length-of pattern1 pattern2)
+  (+ (pattern-numcols pattern1) (pattern-numcols pattern2))
+  )
+
+;;; append cols returns the pattern made by appending pattern2 to the right of pattern1
+;;; the number of rows in the resulting pattern is the smaller of the number of rows in pattern1 and patten2
+(define (append-cols pattern1 pattern2)
+  ;; fill in here
+  )
 
