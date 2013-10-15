@@ -1,13 +1,4 @@
-;;;; This file is project 1 for CS 314 for Fall 2013, taught by Prof. Steinberg
-
-;;;; The assignment is to fill in the definitions below, adding your code where ever you see
-;;;; the comment 
-     ;;  fill in here
-;;;; to make each function do what its comments say it should do
-;;;; You may also add your own functions, as long as each function has a comment like the ones below.
-;;;; You may not make any other changes to this code.
-
-;;;; See the assignment on Sakai for examples and further information, including due date.
+#lang scheme
 
 ;;;; code for a program to create closures that generate ascii patterns
 
@@ -33,15 +24,21 @@
 ;;; then ... finally with stop.  It returns a list of the values of the calls. 
 ;;; If start>stop, for-n simply returns the empty list without doing any calls to fn.
 (define (for-n start stop fn)
-  ;; fill in here
-  )
+    (if (> start stop) ; condition defined in comment above
+        '() ; empty list for base case
+        (append (fn start) (for-n (+ start 1) stop fn))
+        ; taking whatever fn(start) is and appending to
+        ; it the next for-n
+    )
+  '()
+)
 
 ;;; range-check takes 4 arguments:  row, numrows, col, numcols. It checks if
 ;;;  0 <= row < numrows and similarly for col and numcols.  If both row and col are in range
 ;;;  range-check returns #t, otherwise #f
 (define (range-check row numrows col numcols)
-  ;; fill in here
-  )
+  (and (0 <= row < numrows) (0 <= col < numcols))
+)
 
 ;;; add-check takes 3 arguments: fn, numrows and numcols.  Fn is a
 ;;; function of two numbers, row and col add-check returns a new
@@ -94,30 +91,3 @@
                 ; uses modulo to select the right position.
                 (lambda (row col) ((pattern-fn pattern) row (modulo col (pattern-numcols pattern)))) ))
 
-;;; repeat-rows returns a pattern made up of nrepeats copies of
-;;; pattern, appended vertically (above and below each other)
-(define (repeat-rows nrepeats pattern)
-  ;; fill in  here
-  )
-
-;;; append cols returns the pattern made by appending pattern2 to the right of pattern1
-;;; the number of rows in the resulting pattern is the smaller of the number of rows in pattern1 and patten2
-(define (append-cols pattern1 pattern2)
-  ;; fill in here
-  )
-
-;;; append-rows returns the pattern made by appending pattern2 to the below pattern1
-;;; the number of columns in the resulting pattern is the smaller of the number of columns in pattern1 and patten2
-(define (append-rows pattern1 pattern2)
-  ;;fill in here
-  )
-
-;;; flip-cols returns a pattern that is the left-right mirror image of pattern
-(define (flip-cols pattern)
-  ;;fill in here
-  )
-
-;;; flip-rows returns a pattern that is the up-down mirror image of pattern
-(define (flip-rows pattern)
-  ;; fill  in here
-  )
