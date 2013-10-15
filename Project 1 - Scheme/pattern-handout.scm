@@ -107,17 +107,80 @@
      )
   )
 
+; takes two patterns and adds the number of rows
 (define (get-row-length-of pattern1 pattern2)
   (+ (pattern-numrows pattern1) (pattern-numrows pattern2))
   )
 
+; takes two patterns and adds the number of cols
 (define (get-col-length-of pattern1 pattern2)
   (+ (pattern-numcols pattern1) (pattern-numcols pattern2))
+  )
+
+; takes two patterns and finds the minimum of the rows
+(define (min-row-length-of pattern1 pattern2)
+  (min (pattern-numrows pattern1) (pattern-numrows pattern2))
+  )
+
+; takes two patterns and finds the minimum of the cols
+(define (min-col-length-of pattern1 pattern2)
+  (min (pattern-numcols pattern1) (pattern-numcols pattern2))
   )
 
 ;;; append cols returns the pattern made by appending pattern2 to the right of pattern1
 ;;; the number of rows in the resulting pattern is the smaller of the number of rows in pattern1 and patten2
 (define (append-cols pattern1 pattern2)
-  ;; fill in here
+  (make-pattern
+   (min-row-length-of pattern1 pattern2) 
+   (get-col-length-of pattern1 pattern2)
+   (lambda (row col)
+     (if (> (pattern-numcols pattern1) col)
+         ((pattern-fn pattern1) row col)
+         ((pattern-fn pattern2) row (- col (pattern-numcols pattern1)))
+         )
+     )
+   )
   )
 
+;;; append-rows returns the pattern made by appending pattern2 to the below pattern1
+;;; the number of columns in the resulting pattern is the smaller of the number of columns in pattern1 and patten2
+(define (append-rows pattern1 pattern2)
+  (make-pattern
+   (get-row-length-of pattern1 pattern2) 
+   (min-col-length-of pattern1 pattern2)
+   (lambda (row col)
+     (if (> (pattern-numrows pattern1) row)
+         ((pattern-fn pattern1) row col)
+         ((pattern-fn pattern2)(- row (pattern-numrows pattern1))col)
+         )
+     )
+   )
+  )
+
+;;; flip-cols returns a pattern that is the left-right mirror image of pattern
+(define (flip-cols pattern)
+(make-pattern
+ (pattern-numrows pattern)
+ (pattern-numcols pattern)
+ (lambda (row col)
+   ((pattern-fn pattern)
+    row
+    (- (pattern-numcols pattern) (+ col 1) )
+    )
+   )
+ )
+)
+
+;;; flip-rows returns a pattern that is the up-down mirror image of pattern
+(define (flip-rows pattern)
+  (make-pattern
+   (pattern-numrows pattern)
+   (pattern-numcols pattern)
+   (lambda (row col)
+     ((pattern-fn pattern) 
+      (- (pattern-numrows pattern) (+ row 1) ) 
+      col
+      )
+     )
+   )
+  )
