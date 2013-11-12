@@ -1,0 +1,50 @@
+%%% examples of calls to Project 2 predicates, CS314, Fall, 2013
+%%% revision 2 - the call to solve_coloring has been fixed to make the
+%%% graph valid
+
+ > swipl
+?- consult(color).
+true.
+
+?- all_names([node(a, 0, [b]), node(b, 0, [a, c]), node(c, 0, [b])], N).
+N = [a, b, c].
+
+?- all_unique([a,b,a]).
+false.
+
+?- node_backlinks_valid(a,[b],[node(c, 0, [ ]), node(b, 0, [a, c]), node(a, 0, [b])]).
+true 
+
+?- node_backlinks_valid(b,[a,c],[node(c, 0, [ ]), node(b, 0, [a, c]), node(a, 0, [b])]).
+false.
+
+?- all_backlinks_valid([node(a, 0, [b]), node(b, 0, [a, c])],[node(b,0, [a, c]), node(c, 0, [ ]), node(a, 0, [b])]).
+false.
+
+?- all_backlinks_valid([node(a, 0, [b])],[node(b,0, [a, c]), node(c, 0, [ ]), node(a, 0, [b])]).
+true.
+
+?- all_backlinks_valid([node(b, 0, [a, c]), node(a, 0, [b])],[node(c, 0, [b]), node(b, 0, [a, c]), node(a, 0, [b])]).
+true .
+
+?- color(N).
+N = 1 ;
+N = 2 ;
+N = 3 ;
+false.
+
+?- colors_of([a,b],[node(c, 2, [b]), node(b, 1, [a, c]), node(a, 3, [b])],C).
+C = [3, 1] .
+
+*** the line below has been fixed ***
+?- solve_coloring([node(c, Cc, [b,d]), node(b, Cb, [a, c,d]), node(a, Ca, [d,b]), node(d, Cd, [a,b,c])]).
+Cc = 1, Cb = 2, Ca = 1, Cd = 3 ;
+Cc = 1,  Cb = 3, Ca = 1, Cd = 2 ;
+Cc = 2, Cb = 1, Ca = 2, Cd = 3 ;
+Cc = 2, Cb = 3, Ca = 2, Cd = 1 ;
+Cc = 3, Cb = 1, Ca = 3, Cd = 2 ;
+Cc = 3, Cb = 2, Ca = 3, Cd = 1 ;
+false.
+
+(The ourput from solve_coloring,  Cc=1 etc, has been reformatted to save space and add
+clarity.  Your ourput can have any format, and can be in any order.)
