@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><script id="f5_cspm">(function(){var f5_cspm={f5_p:'DKABBCCAHADABAAELHAAAABAALNAAAAAEABADAAAGPJCAAAADAAAAFAAAAKFAAAA',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,20,(latency>>8));str=f5_cspm.set_byte(str,21,(latency&0xff));str=f5_cspm.set_byte(str,18,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='aaaaaaaaaaaaaaa='+encodeURIComponent(cookie_val)+';path=/';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'){if(pair[1]=='1234'){var d=new Date();d.setTime(d.getTime()-1);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;';setTimeout(f5_cspm.wait_perf_data,100);}}}}}
+f5_cspm.go();}());</script>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.0.5.2 (MacOSX)">
+	<META NAME="CREATED" CONTENT="20121128;14331800">
+	<META NAME="CHANGED" CONTENT="20131204;16572600">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P>CS 314, Fall 2013, Prof. Steinberg</P>
+<P ALIGN=CENTER><FONT SIZE=4 STYLE="font-size: 15pt">Project 4:
+Python</FONT></P>
+<P ALIGN=LEFT>First download and install python if you do not already
+have in on your machine. You can download it from
+<A HREF="http://www.python.org/download/">http://www.python.org/download/</A>.
+Download version 2.7.6. If you already have python, type the command
+“python  --version” (that is a space followed by two minus signs
+followed by version) to a command window to check the version you
+have. Any version from 2.5 – 2.7.6 should be ok. You can also use
+version 3.x, but if you do, put a large, visible comment at the head
+of the pages.py file you turn in saying exactly which version you
+have used.</P>
+<P ALIGN=LEFT>Documentation can be found at <A HREF="http://docs.python.org/">http://docs.python.org</A>
+. Read the tutorial and skim documentation on the modules <FONT FACE="Courier New">subprocess</FONT>
+and <FONT FACE="Courier New">re</FONT>.</P>
+<P>Next, download the attached file project4.zip, and unzip it to
+create a folder named project4.</P>
+<P>Finally, download and install the R system.
+<FONT COLOR="#000000">&nbsp;</FONT><A HREF="http://www.r-project.org/"><FONT COLOR="#1a4ee6"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><U>http://www.r-project.org/</U></FONT></FONT></FONT></A><FONT COLOR="#000000">&nbsp;</FONT><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>is
+the R&nbsp;home page, download from&nbsp;</FONT></FONT></FONT><FONT COLOR="#1a4ee6"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><U><A HREF="http://lib.stat.cmu.edu/R/CRAN/">http://lib.stat.cmu.edu/R/CRAN/</A>
+</U></FONT></FONT></FONT><FONT COLOR="#1a4ee6"><SPAN STYLE="text-decoration: none"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>.
+</FONT></FONT></SPAN></FONT><FONT COLOR="#000000"><SPAN STYLE="text-decoration: none"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>R
+is a system for analyzing and visualizing data. We will use a tiny
+fraction of its abilities: the ability to produce a histogram. We
+will use it as a black box; you should not need to learn anything
+about R to do this project.</FONT></FONT></SPAN></FONT></P>
+<P><FONT FACE="Times New Roman, serif">This project is an example of
+using Pyth</FONT>on to tie together existing programs. In particular,
+we imagine that we have printing software which generates a log file
+each day, describing the printing jobs done that day. Each print job
+outputs a line in the log file giving the use name and pages printed
+for that job. You are to write a python program which reads a log
+file, figures out the total number of pages printed for each user,
+and calls on the R system to produce a pdf file containing a
+histogram of this data.</P>
+<P STYLE="margin-top: 0.17in; page-break-after: avoid"><FONT FACE="Albany, sans-serif"><FONT SIZE=4>Details</FONT></FONT></P>
+<P>Each print job on the printer causes a line like the following to
+appear in the log file:</P>
+<P ALIGN=LEFT><FONT FACE="Courier New">180.186.109.129 user: luis
+printer: core 2 pages: 32 code: k n h</FONT></P>
+<P>The significant parts of this are <FONT FACE="Courier New">user:
+luis</FONT> and <FONT FACE="Courier New">pages: 32</FONT>. You can
+assume that each print job produces a line that includes the string
+“user:&lt;spaces&gt;&lt;name&gt;” and the string
+“pages:&lt;spaces&gt;&lt;number&gt;” where &lt;spaces&gt; is one
+or more spaces, &lt;name&gt; is a string of lower case letters, and
+&lt;number&gt; is a string of digits indicating how many pages the
+user printed for this print job. There may be other lines in the file
+as well, but they will not include the string “user:”, and they
+should be ignored. 
+</P>
+<P>The folder project4 includes 2 example log files: log and
+logsmall. 
+</P>
+<P>You are to write your program in the file pages.py, which you can
+find in the project3 folder. The file already has one finished
+function in it, runR. If you call runR( ) from python, it will start
+up R and cause R to read commands from the file commands.R. After it
+finishes these commands, R will exit and runR will return.</P>
+<P>Pages.py also has the header for the function
+log2hist(logfilename). This function should read a log file, whose
+name is the value of logfilename. It should produce a file named data
+with one line for each user containing the total pages printed for
+that user. (The file data.example in folder project4 is an example
+showing the format that data should have.) Finally, log2hist should
+call runR, which will cause R to produce the file pageshist.pdf with
+the histogram.</P>
+<P ALIGN=LEFT>Note that this is due at <B>2 AM, </B><B>Thusday</B><B>
+</B><U><B>morning</B></U> <B>Dec. 1</B><B>2</B>. (I.e. it is due very
+late Wednesday night.)Turn in your edited pages.py as an attachment
+to this assignment.</P>
+</BODY>
+</HTML>
