@@ -34,6 +34,7 @@
 132.162.108.121 user: robot5 printer: core 3 pages: 5 code: h n
 211.138.39.241 user: robot15 printer: ink jet a pages: 2 code: r p z t k
 217.93.239.252 user: judy printer: hill 3 pages: 3 code: n q
+217.93.239.252 printer: hill 3 pages: 1000 code: n q
 211.84.164.99 user: robot6 printer: hill 4 pages: 5 code: f r p q f
 7.47.56.103 user: luis printer: ink jet a pages: 1 code: n m r q p
 153.124.190.244 user: robot17 printer: chair's office hp laser  pages: 8 code: f k h k t
