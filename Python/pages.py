@@ -43,6 +43,4 @@ def log2hist(logfilename):
 	data.close()
 
 	runR()
-		
-    
-log2hist("log")
+
